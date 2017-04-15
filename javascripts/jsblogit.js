@@ -1,18 +1,3 @@
-BlogEntries = [
-  {
-    date: '2017-04-14',
-    title: 'test one',
-    body: 'asdf asdf asdf asdf asdf asdf asdf asdf',
-    attribution: 'chris'
-  },
-  {
-    date: '2017-04-13',
-    title: 'test two',
-    body: 'asdfa sdf asdf asdfjdskafhgaksdjgh asdkjfh asdkjf',
-    attribution: 'chris f.'
-  }
-];
-
 JSBlogIt = {
   app_container_elem: 'jsblogit',
   manifest_name: 'manifest',
@@ -40,6 +25,7 @@ JSBlogIt = {
   cache_buster: function() {
     noise = (Math.random().toString(36).substring(7) + Math.random().toString(36).substring(7));
     return noise;
+
   },
 
   // fade in the containing element
@@ -53,7 +39,7 @@ JSBlogIt = {
 
   // sort article dom elements by key
   //
-  sort_articles: function(key_name) {
+  sort_articles: function() {
     self = this;
     articles = self.$entries.children('article');
     sorted_ids = $.map(articles, function(article) { return '#' + $(article).attr('id') }).sort();
@@ -64,7 +50,8 @@ JSBlogIt = {
 
   // render the blog
   //
-  render: function(source_url) {
+  render: function(opts) {
+    self.source_url = opts.source_url ? opts.source_url : null;
     self = this;
     self.init(source_url);
 
