@@ -35,6 +35,13 @@ JSBlogIt = {
 
   },
 
+  // random url junk for cache-busting
+  //
+  cache_buster: function() {
+    noise = (Math.random().toString(36).substring(7) + Math.random().toString(36).substring(7));
+    return noise;
+  },
+
   // fade in the containing element
   //
   fade_in: function() {
@@ -44,21 +51,14 @@ JSBlogIt = {
 
   },
 
-  // fetch n number blog entries
+  // sort article dom elements by key
   //
-  fetch: function(n) {
+  sort_articles: function(key_name) {
     self = this;
-    console.log(self.source_url);
-    self.data = function() {
-      $.get(self.source_url, function(data, status) {
-        $(self.$manifest).html(data);
-      })
-    }();
-    return this.data;
-
-  },
-
-  assign: function(response) {
+    articles = self.$entries.children('article');
+    sorted_ids = $.map(articles, function(article) { return '#' + $(article).attr('id') }).sort();
+    $.map(sorted_ids, function(article_id) { $(article_id).detach().appendTo(self.$entries); });
+    return true;
 
   },
 
@@ -67,18 +67,43 @@ JSBlogIt = {
   render: function(source_url) {
     self = this;
     self.init(source_url);
-    self.fetch(2);
-    $.map(this.data, function(entry) {
-      $this_entry = $('<article></article>').appendTo(self.$entries);
-      $this_entry.html(entry);
-    });
 
-    self.fade_in();
+    $.get(self.source_url, function(data) {
+      urls = data.split(',')
+      $.map(urls, function(url) {
+        url = self.source_url + url + '?' + self.cache_buster();
+
+        $.get(url, function(entry) {
+          lines = entry.split("\n");
+          headers = lines.shift().split('|');
+          body = $.map(lines, function(line) { return marked(line); })
+
+          article = {
+            meta: {
+              title: headers[0].trim(),
+              attribution: headers[1].trim(),
+              published_at: headers[2].trim()
+            },
+            body: body
+          };
+
+          $article = $('<article id="' + article.meta.published_at.replace(/:/g,'_') + '"></article>').appendTo(self.$entries);
+          $summary = $('<section class="meta"></section>').appendTo($article);
+          $('<div class="title">' + article.meta.title + '</div>').appendTo($summary);
+          $('<div class="attribution">' + article.meta.attribution + '</div>').appendTo($summary);
+          $('<div class="published">' + article.meta.published_at + '</div>').appendTo($summary);
+          $body = $('<div class="body"></div>').appendTo($article);
+          $body.html(article.body);
+
+          self.sort_articles();
+
+        });
+
+      });
+
+    }).done(self.fade_in());
     return true;
 
   }
 
 }
-
-
-$(function() { JSBlogIt.render('https://cforee.github.io/tgiaw/'); });
