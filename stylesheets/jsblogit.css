@@ -1,7 +1,75 @@
-.fade-in {
+#jsblogit {
+}
+
+#jsblogit.fade-in {
   -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=0)";
   filter: alpha(opacity=0);
   -moz-opacity: 0.0;
   -khtml-opacity: 0.0;
   opacity: 0.0;
+  font-size: 21px;
+}
+
+#jsblogit main {
+  display: block;
+  margin: 0 auto 0 auto;
+  max-width: 26.5em;
+  min-width: 17em;
+}
+
+#jsblogit main section {
+  padding: 0 21px;
+}
+
+#jsblogit main section article {
+  margin: 4em 0 0 0;
+}
+
+#jsblogit main section article p {
+  padding: 0px 0 3px 2px;
+  line-height: 1.9em;
+}
+
+#jsblogit main section article p em {
+  font-style: normal;
+  font-weight: 200;
+  font-size: inherit;
+}
+
+#jsblogit main section article p strong {
+  font-weight: 400;
+  font-size: inherit;
+}
+
+#jsblogit main section article section.meta {
+  padding: 0;
+}
+
+#jsblogit main section article section.meta .title {
+  display: block;
+  margin: 0 0 13px 0;
+  font-size: 1.8em;
+  line-height: 1.48em;
+}
+
+#jsblogit main section article section.meta .attribution {
+  display: inline;
+  font-size: 0.8em;
+  font-weight: 400;
+  margin: 0 0 0 3px;
+}
+
+#jsblogit main section article section.meta .attribution:after {
+  display: inline;
+  content: ' - ';
+  margin: 0 4px 0 4px;
+}
+
+#jsblogit main section article section.meta .published {
+  display: inline;
+  font-size: 0.73em;
+}
+
+#jsblogit main section article .body {
+  margin: -3px 0 0 0;
 }

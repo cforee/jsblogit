@@ -78,7 +78,7 @@ JSBlogIt = {
           $summary = $('<section class="meta"></section>').appendTo($article);
           $('<div class="title">' + article.meta.title + '</div>').appendTo($summary);
           $('<div class="attribution">' + article.meta.attribution + '</div>').appendTo($summary);
-          $('<div class="published">' + article.meta.published_at + '</div>').appendTo($summary);
+          $('<div class="published">' + article.meta.published_at.split('T')[0] + '</div>').appendTo($summary);
           $body = $('<div class="body"></div>').appendTo($article);
           $body.html(article.body);
 
