@@ -34,6 +34,13 @@
   font-weight: 400;
 }
 
+#jsblogit main section article p h1, #jsblogit main section article p h2, #jsblogit main section article p h3 {
+  font-family: inherit;
+  font-weight: 100;
+  font-style: normal;
+  color: #aa0000;
+}
+
 #jsblogit main section article section.meta {
 }
 
