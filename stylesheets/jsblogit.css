@@ -14,7 +14,6 @@
   display: block;
   margin: 0 auto 0 auto;
   max-width: 26.5em;
-  min-width: 17em;
 }
 
 #jsblogit main section {
@@ -26,13 +25,27 @@
 }
 
 #jsblogit main section article p {
-  padding: 0px 0 3px 2px;
-  line-height: 1.9em;
+  padding: 0px 8px 3px 3px;
+  line-height: 2em;
 }
+
+#jsblogit main section article p a {
+  color: #0690D6;
+  text-decoration: none;
+  padding: 0 0 0 0;
+  font-style: normal;
+  font-weight: 100;
+  font-size: inherit;
+}
+
+#jsblogit main section article p a:hover {
+  color: #0660A6;
+  text-decoration: underline;
+}
+
 
 #jsblogit main section article p em {
   font-style: normal;
-  font-weight: 200;
   font-size: inherit;
 }
 
@@ -47,14 +60,14 @@
 
 #jsblogit main section article section.meta .title {
   display: block;
-  margin: 0 0 13px 0;
-  font-size: 1.8em;
+  margin: 0 0 19px 0;
+  font-size: 1.4em;
   line-height: 1.48em;
 }
 
 #jsblogit main section article section.meta .attribution {
   display: inline;
-  font-size: 0.8em;
+  font-size: 0.84em;
   font-weight: 400;
   margin: 0 0 0 3px;
 }
@@ -62,14 +75,14 @@
 #jsblogit main section article section.meta .attribution:after {
   display: inline;
   content: ' - ';
-  margin: 0 4px 0 4px;
+  margin: 0 2px 0 2px;
 }
 
 #jsblogit main section article section.meta .published {
   display: inline;
-  font-size: 0.73em;
+  font-size: 0.75em;
 }
 
 #jsblogit main section article .body {
-  margin: -3px 0 0 0;
+  margin: -5px 0 0 0;
 }

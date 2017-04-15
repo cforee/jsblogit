@@ -1,5 +1,4 @@
 #jsblogit main {
-  font-size: 17px;
   line-height: 24px;
   color: #525252;
 }
@@ -14,10 +13,25 @@
 
 #jsblogit main section article p {
   font-weight: 100;
+  font-size: 0.87em;
   letter-spacing: 0.5px;
 }
 
+#jsblogit main section article p a {
+  color: #0690D6;
+}
+
+#jsblogit main section article p a:hover {
+  color: #0660A6;
+}
+
+#jsblogit main section article p em {
+  font-style: normal;
+  font-weight: 400;
+}
+
 #jsblogit main section article p strong {
+  font-weight: 400;
 }
 
 #jsblogit main section article section.meta {
