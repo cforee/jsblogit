@@ -42,7 +42,7 @@ JSBlogIt = {
   sort_articles: function() {
     self = this;
     articles = self.$entries.children('article');
-    sorted_ids = $.map(articles, function(article) { return '#' + $(article).attr('id') }).sort();
+    sorted_ids = $.map(articles, function(article) { return '#' + $(article).attr('id') }).sort().reverse();
     $.map(sorted_ids, function(article_id) { $(article_id).detach().appendTo(self.$entries); });
     return true;
 
@@ -82,9 +82,11 @@ JSBlogIt = {
 
             $article = $('<article id="' + article.meta.published_at.replace(/:/g,'_') + '"></article>').appendTo(self.$entries);
             $summary = $('<section class="meta"></section>').appendTo($article);
-            $('<div class="title">' + article.meta.title + '</div>').appendTo($summary);
+            if (article.meta.title.length > 0) { $('<div class="title">' + article.meta.title + '</div>').appendTo($summary); }
             $('<div class="attribution">' + article.meta.attribution + '</div>').appendTo($summary);
-            $('<div class="published">' + article.meta.published_at.split('T')[0] + '</div>').appendTo($summary);
+            if (article.meta.published_at.split('T')[0] != '9999-99-99') {
+              $('<div class="published">' + article.meta.published_at.split('T')[0] + '</div>').appendTo($summary);
+            }
             $body = $('<div class="body"></div>').appendTo($article);
             $body.html(article.body);
 
