@@ -1,6 +1,6 @@
 JSBlogIt = {
   app_container_elem: 'jsblogit',
-  manifest_name: 'manifest',
+  manifest_url: 'manifest',
   source_url: null,
   data: null,
   $app_container: null,
@@ -13,7 +13,7 @@ JSBlogIt = {
     self = this;
     self.source_url = source_url;
     self.$app_container = $('#' + self.app_container_elem);
-    self.$manifest = $('<div class="' + self.manifest_name + '"></div>').appendTo(self.$app_container);
+    self.$manifest = $('<div class="' + self.manifest_url + '"></div>').appendTo(self.$app_container);
     $content = $('<main></main>').appendTo(self.$app_container);
     self.$entries = $('<section></section>').appendTo($content);
     return true;
@@ -51,14 +51,20 @@ JSBlogIt = {
   // render the blog
   //
   render: function(opts) {
-    self.source_url = opts.source_url ? opts.source_url : null;
     self = this;
-    self.init(source_url);
 
-    $.get(self.source_url, function(data) {
-      urls = data.split(',')
+    self.source_url = opts.source_url ? opts.source_url : null;
+    self.manifest_url = opts.manifest_url ? opts.manifest_url : null;
+
+    self.init(self.source_url);
+
+    noise = self.cache_buster();
+
+    $.get(self.manifest_url, function(data) {
+      urls = $.map(data.split(','), function(data) { return data.trim(); });
+      console.log(urls);
       $.map(urls, function(url) {
-        url = self.source_url + url + '?' + self.cache_buster();
+        url = self.source_url + url + '?' + noise;
 
         $.get(url, function(entry) {
           lines = entry.split("\n");
