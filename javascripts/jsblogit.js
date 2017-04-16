@@ -62,37 +62,38 @@ JSBlogIt = {
 
     $.get(self.manifest_url, function(data) {
       urls = $.map(data.split(','), function(data) { return data.trim(); });
-      console.log(urls);
-      $.map(urls, function(url) {
-        url = self.source_url + url + '?' + noise;
+      if (urls.length > 0) {
+        $.map(urls, function(url) {
+          url = self.source_url + url + '?' + noise;
 
-        $.get(url, function(entry) {
-          lines = entry.split("\n");
-          headers = lines.shift().split('|');
-          body = $.map(lines, function(line) { return marked(line); })
+          $.get(url, function(entry) {
+            lines = entry.split("\n");
+            headers = lines.shift().split('|');
+            body = $.map(lines, function(line) { return marked(line); })
 
-          article = {
-            meta: {
-              title: headers[0].trim(),
-              attribution: headers[1].trim(),
-              published_at: headers[2].trim()
-            },
-            body: body
-          };
+            article = {
+              meta: {
+                title: headers[0].trim(),
+                attribution: headers[1].trim(),
+                published_at: headers[2].trim()
+              },
+              body: body
+            };
 
-          $article = $('<article id="' + article.meta.published_at.replace(/:/g,'_') + '"></article>').appendTo(self.$entries);
-          $summary = $('<section class="meta"></section>').appendTo($article);
-          $('<div class="title">' + article.meta.title + '</div>').appendTo($summary);
-          $('<div class="attribution">' + article.meta.attribution + '</div>').appendTo($summary);
-          $('<div class="published">' + article.meta.published_at.split('T')[0] + '</div>').appendTo($summary);
-          $body = $('<div class="body"></div>').appendTo($article);
-          $body.html(article.body);
+            $article = $('<article id="' + article.meta.published_at.replace(/:/g,'_') + '"></article>').appendTo(self.$entries);
+            $summary = $('<section class="meta"></section>').appendTo($article);
+            $('<div class="title">' + article.meta.title + '</div>').appendTo($summary);
+            $('<div class="attribution">' + article.meta.attribution + '</div>').appendTo($summary);
+            $('<div class="published">' + article.meta.published_at.split('T')[0] + '</div>').appendTo($summary);
+            $body = $('<div class="body"></div>').appendTo($article);
+            $body.html(article.body);
 
-          self.sort_articles();
+            self.sort_articles();
+
+          });
 
         });
-
-      });
+      }
 
     }).done(self.fade_in());
     return true;
