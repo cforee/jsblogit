@@ -1,6 +1,6 @@
 header {
   text-align: center;
-  padding: 89px 21px 233px 21px;
+  padding: 89px 21px 34px 21px;
 }
 
 header h1, header h2, header h3 {
@@ -64,11 +64,16 @@ header h2 {
   font-weight: 400;
 }
 
-#jsblogit main section article p h1, #jsblogit main section article p h2, #jsblogit main section article p h3 {
-  font-family: inherit;
-  font-weight: 100;
-  font-style: normal;
-  color: #aa0000;
+#jsblogit main section article h1,
+#jsblogit main section article h2,
+#jsblogit main section article h3 {
+  font-family: "Cutive", "Times New Roman", serif;
+  margin: 0;
+  line-height: 1.48em;
+}
+
+#jsblogit main section article h2 {
+  font-size: 1em;
 }
 
 #jsblogit main section article section.meta {
