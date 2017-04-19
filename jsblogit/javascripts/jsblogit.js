@@ -13,7 +13,8 @@ JSBlogIt = {
     self = this;
     self.source_url = source_url;
     self.$app_container = $('#' + self.app_container_elem);
-    self.$manifest = $('<div class="' + self.manifest_url + '"></div>').appendTo(self.$app_container);
+    self.$manifest = $('<div class="' + self.manifest_url + '"></div>')
+      .appendTo(self.$app_container);
     $content = $('<main></main>').appendTo(self.$app_container);
     self.$entries = $('<section></section>').appendTo($content);
     return true;
@@ -23,7 +24,10 @@ JSBlogIt = {
   // random url junk for cache-busting
   //
   cache_buster: function() {
-    noise = (Math.random().toString(36).substring(7) + Math.random().toString(36).substring(7));
+    noise = (
+      Math.random().toString(36).substring(7) +
+      Math.random().toString(36).substring(7)
+    );
     return noise;
 
   },
@@ -32,7 +36,8 @@ JSBlogIt = {
   //
   fade_in: function() {
     self = this;
-    self.$app_container.animate({ opacity: '1.0' }, 400);
+    self.$app_container
+      .animate({ opacity: '1.0' }, 400);
     return true;
 
   },
@@ -42,8 +47,12 @@ JSBlogIt = {
   sort_articles: function() {
     self = this;
     articles = self.$entries.children('article');
-    sorted_ids = $.map(articles, function(article) { return '#' + $(article).attr('id') }).sort().reverse();
-    $.map(sorted_ids, function(article_id) { $(article_id).detach().appendTo(self.$entries); });
+    sorted_ids = $.map(articles, function(article) {
+      return '#' + $(article).attr('id')
+    }).sort().reverse();
+    $.map(sorted_ids, function(article_id) {
+      $(article_id).detach().appendTo(self.$entries);
+    });
     return true;
 
   },
@@ -61,7 +70,9 @@ JSBlogIt = {
     noise = self.cache_buster();
 
     $.get(self.manifest_url, function(data) {
-      urls = $.map(data.split(','), function(data) { return data.trim(); });
+      urls = $.map(data.split(','), function(data) {
+        return data.trim();
+      });
       if (urls.length > 0) {
         $.map(urls, function(url) {
           url = self.source_url + url + '?' + noise;
@@ -69,7 +80,9 @@ JSBlogIt = {
           $.get(url, function(entry) {
             lines = entry.split("\n");
             headers = lines.shift().split('|');
-            body = $.map(lines, function(line) { return marked(line); })
+            body = $.map(lines, function(line) {
+              return marked(line);
+            })
 
             article = {
               meta: {
@@ -78,16 +91,29 @@ JSBlogIt = {
                 published_at: headers[2].trim()
               },
               body: body
+
             };
 
-            $article = $('<article id="' + article.meta.published_at.replace(/:/g,'_') + '"></article>').appendTo(self.$entries);
-            $summary = $('<section class="meta"></section>').appendTo($article);
-            if (article.meta.title.length > 0) { $('<div class="title">' + article.meta.title + '</div>').appendTo($summary); }
-            $('<div class="attribution">' + article.meta.attribution + '</div>').appendTo($summary);
-            if (article.meta.published_at.split('T')[0] != '9999-99-99') {
-              $('<div class="published">' + article.meta.published_at.split('T')[0] + '</div>').appendTo($summary);
+            $article = $('<article id="' +
+              article.meta.published_at.replace(/:/g,'_') +
+                '"></article>').appendTo(self.$entries);
+            $summary = $('<section class="meta"></section>')
+              .appendTo($article);
+            if (article.meta.title.length > 0) {
+              $('<div class="title">' +
+                  article.meta.title +
+                '</div>').appendTo($summary);
             }
-            $body = $('<div class="body"></div>').appendTo($article);
+            $('<div class="attribution">' +
+                article.meta.attribution +
+              '</div>').appendTo($summary);
+            if (article.meta.published_at.split('T')[0] != '9999-99-99') {
+              $('<div class="published">' +
+                  article.meta.published_at.split('T')[0] +
+                '</div>').appendTo($summary);
+            }
+            $body = $('<div class="body"></div>')
+              .appendTo($article);
             $body.html(article.body);
 
             self.sort_articles();
